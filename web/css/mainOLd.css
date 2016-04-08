@@ -1,0 +1,35 @@
+.flexbox-container {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: column;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    min-height: calc(122vh + 29vw);
+    border: 2px inset #a42a3c; }
+@media screen and (min-width: 48em) and (max-width: 63.9375em) {
+    .flexbox-container {
+        height: 125vh;
+        min-height: calc(125vh); } }
+@media screen and (min-width: 64em) {
+    .flexbox-container {
+        min-height: calc(96vh + 29vw); } }
+
+body {
+    padding-bottom: 60px;
+    margin: 0px;
+    font-family: "Raleway", sans-serif;
+    max-height: calc(100vh + 137vw);
+    border-bottom: none; }
+@media screen and (min-width: 20em) {
+    body {
+        min-height: 100vh;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column; } }

@@ -1,0 +1,43 @@
+<header class="header">
+<div class="swiper-container swiper-container-horizontal">
+    <div class="swiper-wrapper jswipe__wrapper">
+        <div class="swiper-slide jswipe__slide" data-swiper-slide-index="0">
+            <img src="{{ asset("img/home-images/playtoWinPic1.png") }}">
+        </div>
+        <div class="swiper-slide jswipe__slide" data-swiper-slide-index="1">
+            <img src="{{ asset("img/home-images/refuse2Lose2.png") }}">
+        </div>
+        <div class="swiper-slide jswipe__slide" data-swiper-slide-index="2">
+            <img src="{{ asset("img/home-images/LsLogo.jpg") }}">
+        </div>
+        <div class="swiper-slide jswipe__slide" data-swiper-slide-index="3">
+            <div class="jswipe__annoucement">
+                <h2 class="jswipe__annoucement--title">Practice Schedule</h2>
+                <span class="jswipe__annoucement--byline">Week the of: {{ sunday }}</span>
+                <p class="jswipe__date-row"><span class="jswipe__date-row--day">Tuesday:</span> {{ tuesday }} </p>
+                <span class="jswipe__date-row--session">5th/6th Grade: 6:00 to 7:30</span>
+                <span class="jswipe__date-row--session">7th/8th Grade: 6:00 to 7:30</span>
+                <span class="jswipe__date-row--session">9th/10th Grade: 7:30 to 9:00</span>
+                <span class="jswipe__date-row--session">11th/12th Grade: 7:30 to 9:00</span>
+                <p class="jswipe__date-row"><span class="jswipe__date-row--day">Thursday:</span> {{ thurs }} </p>
+                <span class="jswipe__date-row--session">5th/6th Grade: 6:00 to 7:30</span>
+                <span class="jswipe__date-row--session">7th/8th Grade: 6:00 to 7:30</span>
+                <span class="jswipe__date-row--session">9th/10th Grade: 7:30 to 9:00</span>
+                <span class="jswipe__date-row--session">11th/12th Grade: 7:30 to 9:00</span>
+            </div>
+        </div>
+        {#<div class="swiper-slide jswipe__slide" data-swiper-slide-index="5">
+            Slide 6
+        </div>
+        <div class="swiper-slide jswipe__slide" data-swiper-slide-index="6">
+            Slide 7
+        </div>
+        <div class="swiper-slide jswipe__slide" data-swiper-slide-index="7">
+            Slide 8
+        </div>#}
+    </div>
+    <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"></div>
+    <div class="swiper-button-prev swiper-button-white"></div>
+    <div class="swiper-button-next swiper-button-white"></div>
+</div>
+</header>
