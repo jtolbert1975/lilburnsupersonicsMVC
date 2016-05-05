@@ -1,11 +1,17 @@
-/*! Picturefill - v3.0.0-alpha1 - 2015-06-24
-* http://scottjehl.github.io/picturefill
-* Copyright (c) 2015 https://github.com/scottjehl/picturefill/blob/master/Authors.txt; Licensed MIT */
+/*! picturefill - v3.0.2 - 2016-02-12
+ * https://scottjehl.github.io/picturefill/
+ * Copyright (c) 2016 https://github.com/scottjehl/picturefill/blob/master/Authors.txt; Licensed MIT
+ */
+/*! Gecko-Picture - v1.0
+ * https://github.com/scottjehl/picturefill/tree/3.0/src/plugins/gecko-picture
+ * Firefox's early picture implementation (prior to FF41) is static and does
+ * not react to viewport changes. This tiny module fixes this.
+ */
 (function(window) {
 	/*jshint eqnull:true */
 	var ua = navigator.userAgent;
 
-	if ( window.HTMLPictureElement && ((/ecko/).test(ua) && ua.match(/rv\:(\d+)/) && RegExp.$1 < 41) ) {
+	if ( window.HTMLPictureElement && ((/ecko/).test(ua) && ua.match(/rv\:(\d+)/) && RegExp.$1 < 45) ) {
 		addEventListener("resize", (function() {
 			var timer;
 
@@ -65,13 +71,13 @@
 	}
 })(window);
 
-/*! Picturefill - Responsive Images that work today.
- *  Author: Scott Jehl, Filament Group, 2012 ( new proposal implemented by Shawn Jansepar )
+/*! Picturefill - v3.0.2
+ * http://scottjehl.github.io/picturefill
+ * Copyright (c) 2015 https://github.com/scottjehl/picturefill/blob/master/Authors.txt;
  *  License: MIT
- *  Spec: http://picture.responsiveimages.org/
  */
+
 (function( window, document, undefined ) {
-	/* global parseSizes */
 	// Enable strict mode
 	"use strict";
 
@@ -81,6 +87,7 @@
 	var warn, eminpx, alwaysCheckWDescriptor, evalId;
 	// local object for method references and testing exposure
 	var pf = {};
+	var isSupportTestReady = false;
 	var noop = function() {};
 	var image = document.createElement( "img" );
 	var getImgAttr = image.getAttribute;
@@ -128,17 +135,17 @@
 
 	// (Don't use \s, to avoid matching non-breaking space.)
 	var regexLeadingSpaces = /^[ \t\n\r\u000c]+/,
-	    regexLeadingCommasOrSpaces = /^[, \t\n\r\u000c]+/,
-	    regexLeadingNotSpaces = /^[^ \t\n\r\u000c]+/,
-	    regexTrailingCommas = /[,]+$/,
-	    regexNonNegativeInteger = /^\d+$/,
+		regexLeadingCommasOrSpaces = /^[, \t\n\r\u000c]+/,
+		regexLeadingNotSpaces = /^[^ \t\n\r\u000c]+/,
+		regexTrailingCommas = /[,]+$/,
+		regexNonNegativeInteger = /^\d+$/,
 
-	    // ( Positive or negative or unsigned integers or decimals, without or without exponents.
-	    // Must include at least one digit.
-	    // According to spec tests any decimal point must be followed by a digit.
-	    // No leading plus sign is allowed.)
-	    // https://html.spec.whatwg.org/multipage/infrastructure.html#valid-floating-point-number
-	    regexFloatingPoint = /^-?(?:[0-9]+|[0-9]*\.[0-9]+)(?:[eE][+-]?[0-9]+)?$/;
+	// ( Positive or negative or unsigned integers or decimals, without or without exponents.
+	// Must include at least one digit.
+	// According to spec tests any decimal point must be followed by a digit.
+	// No leading plus sign is allowed.)
+	// https://html.spec.whatwg.org/multipage/infrastructure.html#valid-floating-point-number
+		regexFloatingPoint = /^-?(?:[0-9]+|[0-9]*\.[0-9]+)(?:[eE][+-]?[0-9]+)?$/;
 
 	var on = function(obj, evt, fn, capture) {
 		if ( obj.addEventListener ) {
@@ -168,10 +175,10 @@
 	// http://jsperf.com/whitespace-character/5
 	function isSpace(c) {
 		return (c === "\u0020" || // space
-		        c === "\u0009" || // horizontal tab
-		        c === "\u000A" || // new line
-		        c === "\u000C" || // form feed
-		        c === "\u000D");  // carriage return
+		c === "\u0009" || // horizontal tab
+		c === "\u000A" || // new line
+		c === "\u000C" || // form feed
+		c === "\u000D");  // carriage return
 	}
 
 	/**
@@ -192,29 +199,29 @@
 			return string;
 		};
 
-		var buidlStr = memoize(function(css) {
+		var buildStr = memoize(function(css) {
 
 			return "return " + replace((css || "").toLowerCase(),
-				// interpret `and`
-				/\band\b/g, "&&",
+					// interpret `and`
+					/\band\b/g, "&&",
 
-				// interpret `,`
-				/,/g, "||",
+					// interpret `,`
+					/,/g, "||",
 
-				// interpret `min-` as >=
-				/min-([a-z-\s]+):/g, "e.$1>=",
+					// interpret `min-` as >=
+					/min-([a-z-\s]+):/g, "e.$1>=",
 
-				// interpret `max-` as <=
-				/max-([a-z-\s]+):/g, "e.$1<=",
+					// interpret `max-` as <=
+					/max-([a-z-\s]+):/g, "e.$1<=",
 
-				//calc value
-				/calc([^)]+)/g, "($1)",
+					//calc value
+					/calc([^)]+)/g, "($1)",
 
-				// interpret css values
-				/(\d+[\.]*[\d]*)([a-z]+)/g, "($1 * e.$2)",
-				//make eval less evil
-				/^(?!(e.[a-z]|[0-9\.&=|><\+\-\*\(\)\/])).*/ig, ""
-			) + ";";
+					// interpret css values
+					/(\d+[\.]*[\d]*)([a-z]+)/g, "($1 * e.$2)",
+					//make eval less evil
+					/^(?!(e.[a-z]|[0-9\.&=|><\+\-\*\(\)\/])).*/ig, ""
+				) + ";";
 		});
 
 		return function(css, length) {
@@ -226,7 +233,7 @@
 				} else {
 					/*jshint evil:true */
 					try{
-						cssCache[css] = new Function("e", buidlStr(css))(units);
+						cssCache[css] = new Function("e", buildStr(css))(units);
 					} catch(e) {}
 					/*jshint evil:false */
 				}
@@ -250,6 +257,9 @@
 	 * @param opt
 	 */
 	var picturefill = function( opt ) {
+
+		if (!isSupportTestReady) {return;}
+
 		var elements, i, plen;
 
 		var options = opt || {};
@@ -317,7 +327,7 @@
 	}
 
 	// test svg support
-	types[ "image/svg+xml" ] = document.implementation.hasFeature( "http://wwwindow.w3.org/TR/SVG11/feature#Image", "1.1" );
+	types[ "image/svg+xml" ] = document.implementation.hasFeature( "http://www.w3.org/TR/SVG11/feature#Image", "1.1" );
 
 	/**
 	 * updates the internal vW property with the current viewport width in px
@@ -469,7 +479,7 @@
 
 		function collectCharacters(regEx) {
 			var chars,
-			    match = regEx.exec(input.substring(pos));
+				match = regEx.exec(input.substring(pos));
 			if (match) {
 				chars = match[ 0 ];
 				pos += chars.length;
@@ -478,23 +488,23 @@
 		}
 
 		var inputLength = input.length,
-		    url,
-		    descriptors,
-		    currentDescriptor,
-		    state,
-		    c,
+			url,
+			descriptors,
+			currentDescriptor,
+			state,
+			c,
 
-		    // 2. Let position be a pointer into input, initially pointing at the start
-		    //    of the string.
-		    pos = 0,
+		// 2. Let position be a pointer into input, initially pointing at the start
+		//    of the string.
+			pos = 0,
 
-		    // 3. Let candidates be an initially empty source set.
-		    candidates = [];
+		// 3. Let candidates be an initially empty source set.
+			candidates = [];
 
 		/**
-		* Adds descriptor properties to a candidate, pushes to the candidates array
-		* @return undefined
-		*/
+		 * Adds descriptor properties to a candidate, pushes to the candidates array
+		 * @return undefined
+		 */
 		// (Declared outside of the while loop so that it's only created once.
 		// (This fn is defined before it is used, in order to pass JSHINT.
 		// Unfortunately this breaks the sequencing of the spec comments. :/ )
@@ -506,9 +516,9 @@
 			// 10. Let width be absent.
 			// 11. Let density be absent.
 			// 12. Let future-compat-h be absent. (We're implementing it now as h)
-			    w, d, h, i,
-			    candidate = {},
-			    desc, lastChar, value, intVal, floatVal;
+				w, d, h, i,
+				candidate = {},
+				desc, lastChar, value, intVal, floatVal;
 
 			// 13. For each descriptor in descriptors, run the appropriate set of steps
 			// from the following list:
@@ -532,8 +542,8 @@
 					// Otherwise, let width be the result.
 					if (intVal === 0) {pError = true;} else {w = intVal;}
 
-				// If the descriptor consists of a valid floating-point number followed by
-				// a U+0078 LATIN SMALL LETTER X character
+					// If the descriptor consists of a valid floating-point number followed by
+					// a U+0078 LATIN SMALL LETTER X character
 				} else if (regexFloatingPoint.test(value) && (lastChar === "x")) {
 
 					// If width, density and future-compat-h are not all absent, then let error
@@ -545,8 +555,8 @@
 					// be the result.
 					if (floatVal < 0) {pError = true;} else {d = floatVal;}
 
-				// If the descriptor consists of a valid non-negative integer followed by
-				// a U+0068 LATIN SMALL LETTER H character
+					// If the descriptor consists of a valid non-negative integer followed by
+					// a U+0068 LATIN SMALL LETTER H character
 				} else if (regexNonNegativeInteger.test(value) && (lastChar === "h")) {
 
 					// If height and density are not both absent, then let error be yes.
@@ -557,7 +567,7 @@
 					// be the result.
 					if (intVal === 0) {pError = true;} else {h = intVal;}
 
-				// Anything else, Let error be yes.
+					// Anything else, Let error be yes.
 				} else {pError = true;}
 			} // (close step 13 for loop)
 
@@ -579,11 +589,11 @@
 		} // (close parseDescriptors fn)
 
 		/**
-		* Tokenizes descriptor properties prior to parsing
-		* Returns undefined.
-		* (Again, this fn is defined before it is used, in order to pass JSHINT.
-		* Unfortunately this breaks the logical sequencing of the spec comments. :/ )
-		*/
+		 * Tokenizes descriptor properties prior to parsing
+		 * Returns undefined.
+		 * (Again, this fn is defined before it is used, in order to pass JSHINT.
+		 * Unfortunately this breaks the logical sequencing of the spec comments. :/ )
+		 */
 		function tokenize() {
 
 			// 8.1. Descriptor tokeniser: Skip whitespace
@@ -608,10 +618,10 @@
 				if (state === "in descriptor") {
 					// Do the following, depending on the value of c:
 
-				  // Space character
-				  // If current descriptor is not empty, append current descriptor to
-				  // descriptors and let current descriptor be the empty string.
-				  // Set state to after descriptor.
+					// Space character
+					// If current descriptor is not empty, append current descriptor to
+					// descriptors and let current descriptor be the empty string.
+					// Set state to after descriptor.
 					if (isSpace(c)) {
 						if (currentDescriptor) {
 							descriptors.push(currentDescriptor);
@@ -619,10 +629,10 @@
 							state = "after descriptor";
 						}
 
-					// U+002C COMMA (,)
-					// Advance position to the next character in input. If current descriptor
-					// is not empty, append current descriptor to descriptors. Jump to the step
-					// labeled descriptor parser.
+						// U+002C COMMA (,)
+						// Advance position to the next character in input. If current descriptor
+						// is not empty, append current descriptor to descriptors. Jump to the step
+						// labeled descriptor parser.
 					} else if (c === ",") {
 						pos += 1;
 						if (currentDescriptor) {
@@ -631,15 +641,15 @@
 						parseDescriptors();
 						return;
 
-					// U+0028 LEFT PARENTHESIS (()
-					// Append c to current descriptor. Set state to in parens.
+						// U+0028 LEFT PARENTHESIS (()
+						// Append c to current descriptor. Set state to in parens.
 					} else if (c === "\u0028") {
 						currentDescriptor = currentDescriptor + c;
 						state = "in parens";
 
-					// EOF
-					// If current descriptor is not empty, append current descriptor to
-					// descriptors. Jump to the step labeled descriptor parser.
+						// EOF
+						// If current descriptor is not empty, append current descriptor to
+						// descriptors. Jump to the step labeled descriptor parser.
 					} else if (c === "") {
 						if (currentDescriptor) {
 							descriptors.push(currentDescriptor);
@@ -647,14 +657,14 @@
 						parseDescriptors();
 						return;
 
-					// Anything else
-					// Append c to current descriptor.
+						// Anything else
+						// Append c to current descriptor.
 					} else {
 						currentDescriptor = currentDescriptor + c;
 					}
-				// (end "in descriptor"
+					// (end "in descriptor"
 
-				// In parens
+					// In parens
 				} else if (state === "in parens") {
 
 					// U+0029 RIGHT PARENTHESIS ())
@@ -663,34 +673,34 @@
 						currentDescriptor = currentDescriptor + c;
 						state = "in descriptor";
 
-					// EOF
-					// Append current descriptor to descriptors. Jump to the step labeled
-					// descriptor parser.
+						// EOF
+						// Append current descriptor to descriptors. Jump to the step labeled
+						// descriptor parser.
 					} else if (c === "") {
 						descriptors.push(currentDescriptor);
 						parseDescriptors();
 						return;
 
-					// Anything else
-					// Append c to current descriptor.
+						// Anything else
+						// Append c to current descriptor.
 					} else {
 						currentDescriptor = currentDescriptor + c;
 					}
 
-				// After descriptor
+					// After descriptor
 				} else if (state === "after descriptor") {
 
 					// Do the following, depending on the value of c:
 					// Space character: Stay in this state.
 					if (isSpace(c)) {
 
-					// EOF: Jump to the step labeled descriptor parser.
+						// EOF: Jump to the step labeled descriptor parser.
 					} else if (c === "") {
 						parseDescriptors();
 						return;
 
-					// Anything else
-					// Set state to in descriptor. Set position to the previous character in input.
+						// Anything else
+						// Set state to in descriptor. Set position to the previous character in input.
 					} else {
 						state = "in descriptor";
 						pos -= 1;
@@ -701,7 +711,7 @@
 				// Advance position to the next character in input.
 				pos += 1;
 
-			// Repeat this step.
+				// Repeat this step.
 			} // (close while true loop)
 		}
 
@@ -731,17 +741,14 @@
 				// (Jump ahead to step 9 to skip tokenization and just push the candidate).
 				parseDescriptors();
 
-			//	Otherwise, follow these substeps:
+				//	Otherwise, follow these substeps:
 			} else {
 				tokenize();
 			} // (close else of step 8)
 
-		// 16. Return to the step labeled splitting loop.
+			// 16. Return to the step labeled splitting loop.
 		} // (Close of big while loop.)
 	}
-
-	/* jshint ignore:start */
-	// jscs:disable
 
 	/*
 	 * Sizes Parser
@@ -825,9 +832,9 @@
 
 			// (Loop forwards from the beginning of the string.)
 			while (true) {
-				chrctr = str[pos];
+				chrctr = str.charAt(pos);
 
-				if (chrctr === undefined) { // ( End of string reached.)
+				if (chrctr === "") { // ( End of string reached.)
 					pushComponent();
 					pushComponentArray();
 					return listArray;
@@ -845,7 +852,7 @@
 					// (If previous character in loop was also a space, or if
 					// at the beginning of the string, do not add space char to
 					// component.)
-					if ((str[pos - 1] && isSpace(str[pos - 1])) || (!component)) {
+					if ( (str.charAt(pos - 1) && isSpace( str.charAt(pos - 1) ) ) || !component ) {
 						pos += 1;
 						continue;
 					} else if (parenDepth === 0) {
@@ -861,11 +868,11 @@
 				} else if (chrctr === ")") {
 					parenDepth -= 1;
 				} else if (chrctr === ",") {
-					pushComponent()
+					pushComponent();
 					pushComponentArray();
 					pos += 1;
 					continue;
-				} else if ((chrctr === "/") && (str[pos + 1] === "*")) {
+				} else if ( (chrctr === "/") && (str.charAt(pos + 1) === "*") ) {
 					inComment = true;
 					pos += 2;
 					continue;
@@ -949,8 +956,6 @@
 		// size value, return 100vw.
 		return "100vw";
 	}
-	// jscs: enable
-	/* jshint ignore:end */
 
 	// namespace
 	pf.ns = ("pf" + new Date().getTime()).substr(0, 9);
@@ -958,16 +963,57 @@
 	// srcset support test
 	pf.supSrcset = "srcset" in image;
 	pf.supSizes = "sizes" in image;
+	pf.supPicture = !!window.HTMLPictureElement;
+
+	// UC browser does claim to support srcset and picture, but not sizes,
+	// this extended test reveals the browser does support nothing
+	if (pf.supSrcset && pf.supPicture && !pf.supSizes) {
+		(function(image2) {
+			image.srcset = "data:,a";
+			image2.src = "data:,a";
+			pf.supSrcset = image.complete === image2.complete;
+			pf.supPicture = pf.supSrcset && pf.supPicture;
+		})(document.createElement("img"));
+	}
+
+	// Safari9 has basic support for sizes, but does't expose the `sizes` idl attribute
+	if (pf.supSrcset && !pf.supSizes) {
+
+		(function() {
+			var width2 = "data:image/gif;base64,R0lGODlhAgABAPAAAP///wAAACH5BAAAAAAALAAAAAACAAEAAAICBAoAOw==";
+			var width1 = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+			var img = document.createElement("img");
+			var test = function() {
+				var width = img.width;
+
+				if (width === 2) {
+					pf.supSizes = true;
+				}
+
+				alwaysCheckWDescriptor = pf.supSrcset && !pf.supSizes;
+
+				isSupportTestReady = true;
+				// force async
+				setTimeout(picturefill);
+			};
+
+			img.onload = test;
+			img.onerror = test;
+			img.setAttribute("sizes", "9px");
+
+			img.srcset = width1 + " 1w," + width2 + " 9w";
+			img.src = width1;
+		})();
+
+	} else {
+		isSupportTestReady = true;
+	}
 
 	// using pf.qsa instead of dom traversing does scale much better,
 	// especially on sites mixing responsive and non-responsive images
 	pf.selShort = "picture>img,img[srcset]";
 	pf.sel = pf.selShort;
 	pf.cfg = cfg;
-
-	if ( pf.supSrcset ) {
-		pf.sel += ",img[" + srcsetAttr + "]";
-	}
 
 	/**
 	 * Shortcut property for `devicePixelRatio` ( for easy overriding in tests )
@@ -977,8 +1023,6 @@
 
 	// container of supported mime types that one might need to qualify before using
 	pf.types =  types;
-
-	alwaysCheckWDescriptor = pf.supSrcset && !pf.supSizes;
 
 	pf.setSize = noop;
 
@@ -998,10 +1042,10 @@
 	 * Can be extended with jQuery/Sizzle for IE7 support
 	 * @param context
 	 * @param sel
-	 * @returns {NodeList}
+	 * @returns {NodeList|Array}
 	 */
 	pf.qsa = function(context, sel) {
-		return context.querySelectorAll(sel);
+		return ( "querySelector" in context ) ? context.querySelectorAll(sel) : [];
 	};
 
 	/**
@@ -1162,7 +1206,6 @@
 			bestCandidate,
 			curSrc,
 			curCan,
-			isSameSet,
 			candidateSrc,
 			abortCurSrc;
 
@@ -1185,7 +1228,7 @@
 
 				// if current candidate is "best", "better" or "okay",
 				// set it to bestCandidate
-				if ( curCan && isSameSet && curCan.res >= dpr ) {
+				if ( curCan.res >= dpr ) {
 					bestCandidate = curCan;
 				}
 			}
@@ -1333,7 +1376,7 @@
 
 		// if img has picture or the srcset was removed or has a srcset and does not support srcset at all
 		// or has a w descriptor (and does not support sizes) set support to false to evaluate
-		imageData.supported = !( hasPicture || ( imageSet && !pf.supSrcset ) || isWDescripor );
+		imageData.supported = !( hasPicture || ( imageSet && !pf.supSrcset ) || (isWDescripor && !pf.supSizes) );
 
 		if ( srcsetParsed && pf.supSrcset && !imageData.supported ) {
 			if ( srcsetAttribute ) {
@@ -1391,12 +1434,12 @@
 	};
 
 	// If picture is supported, well, that's awesome.
-	if ( window.HTMLPictureElement ) {
+	if ( pf.supPicture ) {
 		picturefill = noop;
 		pf.fillImg = noop;
 	} else {
 
-		 // Set up picture polyfill by polling the document
+		// Set up picture polyfill by polling the document
 		(function() {
 			var isDomReady;
 			var regReady = window.attachEvent ? /d$|^c/ : /d$|^c|^i/;
@@ -1440,16 +1483,17 @@
 					}
 				};
 			};
-
+			var lastClientWidth = docElem.clientHeight;
 			var onResize = function() {
-				isVwDirty = true;
-				pf.fillImgs();
+				isVwDirty = Math.max(window.innerWidth || 0, docElem.clientWidth) !== units.width || docElem.clientHeight !== lastClientWidth;
+				lastClientWidth = docElem.clientHeight;
+				if ( isVwDirty ) {
+					pf.fillImgs();
+				}
 			};
 
 			on( window, "resize", debounce(onResize, 99 ) );
 			on( document, "readystatechange", run );
-
-			types[ "image/webp" ] = detectTypeSupport("image/webp", "data:image/webp;base64,UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAABBxAR/Q9ERP8DAABWUDggGAAAADABAJ0BKgEAAQADADQlpAADcAD++/1QAA==" );
 		})();
 	}
 
@@ -1490,6 +1534,11 @@
 	} else if ( typeof define === "function" && define.amd ) {
 		// AMD support
 		define( "picturefill", function() { return picturefill; } );
+	}
+
+	// IE8 evals this sync, so it must be the last thing we do
+	if ( !pf.supPicture ) {
+		types[ "image/webp" ] = detectTypeSupport("image/webp", "data:image/webp;base64,UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAABBxAR/Q9ERP8DAABWUDggGAAAADABAJ0BKgEAAQADADQlpAADcAD++/1QAA==" );
 	}
 
 } )( window, document );

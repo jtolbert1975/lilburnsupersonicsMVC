@@ -17,6 +17,7 @@ requirejs.config({
         owlcar: 'vendor/owlcarousel/owl.carousel.min',
         menu: 'js/modules/menu',
         swiper: 'vendor/swiperjs/swiper.min',
+        expandDiv: 'js/modules/expandableDivs',
 
 
 
@@ -61,7 +62,9 @@ requirejs.config({
 
         swiper:{
             exports: 'swiper'
-        }
+        },
+
+
 
 
 
@@ -71,7 +74,7 @@ requirejs.config({
 
 
 require(['jquery','domReady!' ], function ( $, doc) {
-    require(['jquery','domReady!','scriptsjs',  'moderniz', 'picFill','bxslider', 'swiper', 'menu' ], function ($,doc,  scriptsjs, moderniz, picFill, bxslider, swiper, menu ) {
+    require(['jquery','domReady!','scriptsjs',  'moderniz', 'picFill','bxslider', 'swiper', 'menu' ], function ($,doc,  scriptsjs, moderniz, picFill, bxslider, swiper, menu, expandDiv ) {
         //console.dir(bootstrap)
 
     });

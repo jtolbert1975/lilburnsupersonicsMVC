@@ -8,15 +8,21 @@ requirejs.config({
     paths: {
         jquery: 'vendor/jquery/2.1.4/jquery.min',
         //bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min',
+        jqueryui: 'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
+        corejs: 'vendor/jquery/bower_components/jquery-ui/ui/core',
+        widgetjs:  'vendor/jquery/bower_components/jquery-ui/ui/widget',
+        accordion: 'vendor/jquery/bower_components/jquery-ui/ui/accordion',
         scriptsjs: 'js/scripts',
         moderniz: 'vendor/modernizer/modernizer',
         domReady: 'vendor/domReady/domReady',
         //hideaddbr: 'js/hideaddressbar',
         picFill: 'vendor/picturefill/picturefill',
         bxslider: 'vendor/jquery/bxslider/jquery.bxslider.min',
-        owlcar: 'vendor/owlcarousel/owl.carousel.min',
+        //owlcar: 'vendor/owlcarousel/owl.carousel.min',
         menu: 'js/modules/menu',
         swiper: 'vendor/swiperjs/swiper.min',
+        expandDiv: 'js/modules/expandableDivs',
+
 
 
 
@@ -29,6 +35,21 @@ requirejs.config({
         /* bootstrap: {
          exports: 'bootstrap'
          },*/
+
+        jqueryui:{
+          exports: 'jqueryui'
+        },
+
+        corejs: {
+            exports: 'corejs'
+        },
+
+        widgetjs: {
+            exports: 'widgetjs'
+        },
+        accordion:{
+            exports: 'accordion'
+        },
         scriptsjs: {
             exports: 'scriptsjs'
         },
@@ -51,9 +72,9 @@ requirejs.config({
             exports: 'bxslider'
         },
 
-        owlcar: {
+       /* owlcar: {
             exports: 'owlcar'
-        },
+        },*/
 
         menu:{
             exports: 'menu'
@@ -63,6 +84,10 @@ requirejs.config({
             exports: 'swiper'
         },
 
+        expandDiv: {
+            exports: 'expandDiv'
+        }
+
 
 
     }
@@ -71,7 +96,7 @@ requirejs.config({
 
 
 require(['jquery','domReady!' ], function ( $, doc) {
-    require(['jquery','domReady!','scriptsjs',  'moderniz', 'picFill','bxslider', 'swiper', 'menu' ], function ($,doc,  scriptsjs, moderniz, picFill, bxslider, swiper, menu ) {
+    require(['jqueryui','corejs','widgetjs','accordion','scriptsjs',  'moderniz', 'picFill','bxslider', 'swiper', 'menu', 'expandDiv' ], function ($,doc, jqueryui,corejs,accordion,widgetjs, scriptsjs, moderniz, picFill, bxslider, swiper, menu, expandDiv ) {
         //console.dir(bootstrap)
 
     });
