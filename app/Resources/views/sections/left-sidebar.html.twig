@@ -25,16 +25,6 @@
         </div>
         <div class="expandable-panel-content">
             {% include 'includes/weeklyschedule.html.twig' %}
-          {#  <p>Panel HTML...</p>
-            <figure class="left__about">
-                <img src="{{ asset('img/home-images/jahvaniCatchDsktp.jpg') }}" alt="Lilburn SuperSonics Basketball Club">
-                <figcaption class="left--cntr-margin"> <p class="left__text left--intromargin">The Lilburn SuperSonics Basketball Club (L.S.B.C) is an organization dedicated to guiding our leaders of tomorrow.
-                        We help our area youth learn the value of hard work, team work and being exceptional. Teaching, Our passion, the
-                        game of basketball while instilling the values of integrity and respect. As we continue to grow, we look
-                        forward to serving the youth and families in the Lilburn and surrounding areas.
-                    </p></figcaption>
-            </figure>#}
-
 
         </div>
       </div>
@@ -43,15 +33,7 @@
                 <h2>UpComing Events<a href=" "><span class="icon-open"></span></a></h2>
             </div>
             <div class="expandable-panel-content">
-                <p>Panel HTML...</p>
-                <figure class="left__about">
-                    <img src="{{ asset('img/home-images/jahvaniCatchDsktp.jpg') }}" alt="Lilburn SuperSonics Basketball Club">
-                    <figcaption class="left--cntr-margin"> <p class="left__text left--intromargin">The Lilburn SuperSonics Basketball Club (L.S.B.C) is an organization dedicated to guiding our leaders of tomorrow.
-                            We help our area youth learn the value of hard work, team work and being exceptional. Teaching, Our passion, the
-                            game of basketball while instilling the values of integrity and respect. As we continue to grow, we look
-                            forward to serving the youth and families in the Lilburn and surrounding areas.
-                        </p></figcaption>
-                </figure>
+                {{ include('includes/upcoming_events.html.twig') }}
 
             </div>
         </div>
@@ -60,7 +42,8 @@
                 <h2>News and Notes<span class="icon-open"></span></h2>
             </div>
             <div class="expandable-panel-content">
-                <p>Panel HTML...</p>
+                {{ include('includes/news.html.twig') }}
+               {# <p>Panel HTML...</p>
                 <figure class="left__about">
                     <img src="{{ asset('img/home-images/jahvaniCatchDsktp.jpg') }}" alt="Lilburn SuperSonics Basketball Club">
                     <figcaption class="left--cntr-margin"> <p class="left__text left--intromargin">The Lilburn SuperSonics Basketball Club (L.S.B.C) is an organization dedicated to guiding our leaders of tomorrow.
@@ -68,7 +51,7 @@
                             game of basketball while instilling the values of integrity and respect. As we continue to grow, we look
                             forward to serving the youth and families in the Lilburn and surrounding areas.
                         </p></figcaption>
-                </figure>
+                </figure>#}
 
             </div>
         </div>

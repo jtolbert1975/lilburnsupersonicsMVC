@@ -36,13 +36,14 @@
 
                     {%  endblock %}
 
-                    {% block addbanner %}
 
-                    {%  endblock %}
 
 
 
             {% endblock %}
+            {% block addbanner %}
+                {{ include('includes/ad_carousel.html.twig') }}
+            {%  endblock %}
             {% block footer %}
                 {{ include('sections/footer.html.twig') }}
             {%  endblock %}
