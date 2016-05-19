@@ -8,10 +8,10 @@
             <img src="./img/mblLsLogo.png" alt="Lilburn SuperSonics" />
         </div>-->
         <ul class="navbar__menulist">
-            <li class="navbar__menulist--item"><a href="#" alt="Home">HOME</a></li>
-            <li class="navbar__menulist--item"><a href="#" alt="About">ABOUT</a></li>
-            <li class="navbar__menulist--item"><a href="#" alt="Events">EVENTS</a></li>
-            <li class="navbar__menulist--item"><a href="#" alt="Sponsors">SPONSORS</a></li>
+            <li class="navbar__menulist--item"><a href="{{  path('app_lilburnsupersonics_show') }}" alt="Home">HOME</a></li>
+            <li class="navbar__menulist--item"><a href="{{ path('about_about_show') }}" alt="About">ABOUT</a></li>
+            <li class="navbar__menulist--item"><a href="{{ path('events_events_show') }}" alt="Events">EVENTS</a></li>
+            <li class="navbar__menulist--item"><a href="{{ path('sponsors_sponsors_index') }}" alt="Sponsors">SPONSORS</a></li>
         </ul>
     </nav>
 {% endblock %}

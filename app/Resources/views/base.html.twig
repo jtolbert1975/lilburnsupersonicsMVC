@@ -7,6 +7,8 @@
             <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,700,700italic,500italic,500,600italic,800italic,800,900,900italic' rel='stylesheet' type='text/css'>
             <link rel="stylesheet" href="{{ asset("css/main.css") }}" />
             <link rel="stylesheet" href="{{ asset("css/swiper/swiper.css") }}" />
+            <link rel="stylesheet" href="{{  asset("css/owl/owl.carousel.css") }}" />
+            <link rel="stylesheet" href="{{  asset("css/owl/owl.theme.css") }}" />
 
         {% endblock %}
         {% block scripts %}
@@ -42,7 +44,7 @@
 
             {% endblock %}
             {% block addbanner %}
-                {{ include('includes/ad_carousel.html.twig') }}
+                {{ include('sections/bottom-carousel.html.twig') }}
             {%  endblock %}
             {% block footer %}
                 {{ include('sections/footer.html.twig') }}

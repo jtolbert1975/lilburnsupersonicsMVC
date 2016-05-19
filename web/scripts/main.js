@@ -8,20 +8,21 @@ requirejs.config({
     paths: {
         jquery: 'vendor/jquery/2.1.4/jquery.min',
         //bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min',
-        jqueryui: 'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
-        corejs: 'vendor/jquery/bower_components/jquery-ui/ui/core',
-        widgetjs:  'vendor/jquery/bower_components/jquery-ui/ui/widget',
-        accordion: 'vendor/jquery/bower_components/jquery-ui/ui/accordion',
+       // jqueryui: 'http://code.jquery.com/ui/1.11.4/jquery-ui.min',
+       // corejs: 'vendor/jquery/bower_components/jquery-ui/ui/core',
+       // widgetjs:  'vendor/jquery/bower_components/jquery-ui/ui/widget',
+        //accordion: 'vendor/jquery/bower_components/jquery-ui/ui/accordion',
         scriptsjs: 'js/scripts',
         moderniz: 'vendor/modernizer/modernizer',
         domReady: 'vendor/domReady/domReady',
         //hideaddbr: 'js/hideaddressbar',
         picFill: 'vendor/picturefill/picturefill',
-        bxslider: 'vendor/jquery/bxslider/jquery.bxslider.min',
-        //owlcar: 'vendor/owlcarousel/owl.carousel.min',
+        //bxslider: 'vendor/jquery/bxslider/jquery.bxslider.min',
+        owlcar: 'vendor/owlcarousel/owl.carousel.min',
         menu: 'js/modules/menu',
         swiper: 'vendor/swiperjs/swiper.min',
         expandDiv: 'js/modules/expandableDivs',
+        respslides: 'vendor/responsiveslides/responsiveslides.min',
 
 
 
@@ -40,16 +41,16 @@ requirejs.config({
           exports: 'jqueryui'
         },
 
-        corejs: {
+        /*corejs: {
             exports: 'corejs'
-        },
+        },*/
 
-        widgetjs: {
+    /*    widgetjs: {
             exports: 'widgetjs'
-        },
-        accordion:{
+        },*/
+      /*  accordion:{
             exports: 'accordion'
-        },
+        },*/
         scriptsjs: {
             exports: 'scriptsjs'
         },
@@ -68,13 +69,13 @@ requirejs.config({
             exports: 'picFill'
         },
 
-        bxslider: {
+       /* bxslider: {
             exports: 'bxslider'
-        },
-
-       /* owlcar: {
-            exports: 'owlcar'
         },*/
+
+        owlcar: {
+            exports: 'owlcar'
+        },
 
         menu:{
             exports: 'menu'
@@ -86,6 +87,10 @@ requirejs.config({
 
         expandDiv: {
             exports: 'expandDiv'
+        },
+
+        respslides: {
+            exports: 'respslides'
         }
 
 
@@ -96,7 +101,7 @@ requirejs.config({
 
 
 require(['jquery','domReady!' ], function ( $, doc) {
-    require(['jqueryui','corejs','widgetjs','accordion','scriptsjs',  'moderniz', 'picFill','bxslider', 'swiper', 'menu', 'expandDiv' ], function ($,doc, jqueryui,corejs,accordion,widgetjs, scriptsjs, moderniz, picFill, bxslider, swiper, menu, expandDiv ) {
+    require(['scriptsjs',  'moderniz', 'picFill','bxslider', 'swiper', 'menu', 'expandDiv', 'respslides', 'owlcar' ], function ($,doc, scriptsjs, moderniz, picFill, bxslider, swiper, menu, expandDiv, respslides, owlcar ) {
         //console.dir(bootstrap)
 
     });
