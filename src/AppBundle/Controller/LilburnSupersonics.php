@@ -18,10 +18,10 @@ use \Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class LilburnSupersonics extends Controller
 {
     /**
-     * @Route("/lilburnsupersonics/{sonicsName}" )
+     * @Route("/lilburnsupersonics" )
      */
 
-    public function showAction($sonicsName)
+    public function showAction()
     {
 
         $notes = [
@@ -48,7 +48,7 @@ class LilburnSupersonics extends Controller
 
         //$templating = $this->container->get('templating');
         return $this->render('lilburnsupersonics/home.html.twig', array(
-                'name'=>$sonicsName, 'days' => $days, 'sunday'=> $days[0], 'monday' => $days[1],
+                'days' => $days, 'sunday'=> $days[0], 'monday' => $days[1],
             'tuesday' => $days[2], 'wednesday' => $days[3], 'thurs'=> $days[4], 'fri' => $days[5],
             'saturday' => $days[6]
             ));

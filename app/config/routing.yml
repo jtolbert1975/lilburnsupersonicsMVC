@@ -1,3 +1,18 @@
+sponsors:
+    resource: "@SponsorsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+about:
+    resource: "@AboutBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+events:
+    resource: "@EventsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
