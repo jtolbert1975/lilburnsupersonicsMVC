@@ -101,7 +101,7 @@ requirejs.config({
 
 
 require(['jquery','domReady!' ], function ( $, doc) {
-    require(['scriptsjs',  'moderniz', 'picFill','bxslider', 'swiper', 'menu', 'expandDiv', 'respslides', 'owlcar' ], function ($,doc, scriptsjs, moderniz, picFill, bxslider, swiper, menu, expandDiv, respslides, owlcar ) {
+    require(['scriptsjs',  'moderniz', 'picFill', 'swiper', 'menu', 'expandDiv', 'respslides', 'owlcar' ], function ($,doc, scriptsjs, moderniz, picFill,  swiper, menu, expandDiv, respslides, owlcar ) {
         //console.dir(bootstrap)
 
     });
