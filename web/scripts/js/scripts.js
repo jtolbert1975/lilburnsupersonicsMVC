@@ -1,6 +1,5 @@
 define([
     'jquery',
-    'swiper',
     'owlcar'
 
    
@@ -51,35 +50,6 @@ define([
 
 
 
-    var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-        slidesPerView: 1,
-        paginationClickable: true,
-        spaceBetween: 30,
-        loop: true
-    });
-
-  /*  var swiperRts = new Swiper('.swiper-container-ad .right-rail__billboard', {
-        pagination: '.swiper-pagination',
-       // nextButton: '.swiper-button-next-RtAds',
-       // prevButton: '.swiper-button-prev-RtAds',
-        slidesPerView: 1,
-        paginationClickable: true,
-        spaceBetween: 30,
-        loop: true
-    });*/
-
-
-  /*  setInterval(function() {
-
-      //  var carouselAds = $("#carousel .jswipe__ads");
-
-        $("#carousel .jswipe__ads").animate({'margin-left' : '-=394px'}, 1000 );
-
-    }, 3000)
-*/
 
     //var rtprev = $('.rslides_button .prev');
 
