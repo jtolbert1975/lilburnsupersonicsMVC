@@ -20,7 +20,7 @@ requirejs.config({
         //bxslider: 'vendor/jquery/bxslider/jquery.bxslider.min',
         owlcar: 'vendor/owlcarousel/owl.carousel.min',
         menu: 'js/modules/menu',
-        swiper: 'vendor/swiperjs/swiper.min',
+        //swiper: 'vendor/swiperjs/swiper.min',
         expandDiv: 'js/modules/expandableDivs',
         respslides: 'vendor/responsiveslides/responsiveslides.min',
 
@@ -81,9 +81,9 @@ requirejs.config({
             exports: 'menu'
         },
 
-        swiper:{
+        /*swiper:{
             exports: 'swiper'
-        },
+        },*/
 
         expandDiv: {
             exports: 'expandDiv'
@@ -101,7 +101,7 @@ requirejs.config({
 
 
 require(['jquery','domReady!' ], function ( $, doc) {
-    require(['scriptsjs',  'moderniz', 'picFill', 'swiper', 'menu', 'expandDiv', 'respslides', 'owlcar' ], function ($,doc, scriptsjs, moderniz, picFill,  swiper, menu, expandDiv, respslides, owlcar ) {
+    require(['scriptsjs',  'moderniz', 'picFill', 'menu', 'expandDiv', 'respslides', 'owlcar' ], function ($,doc, scriptsjs, moderniz, picFill,  menu, expandDiv, respslides, owlcar ) {
         //console.dir(bootstrap)
 
     });
