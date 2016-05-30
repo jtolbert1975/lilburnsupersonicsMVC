@@ -3,13 +3,21 @@
 {% block content %}
 
     {% block header %}
-        {{ include('sections/header.html.twig') }}
+        {{ include('sections/header-white.html.twig') }}
     {% endblock %}
 
     <div class="main-content">
-        {{ include('includes/logo.html.twig') }}
 
-        {{  include('includes/underconstruction.html.twig') }}
+
+        {#{{  include('includes/underconstruction.html.twig') }}#}
+        {% block leftside %}
+            {{ include('sections/left-sideAbout.html.twig') }}
+
+        {% endblock %}
+        {% block rightside %}
+            {{ include('sections/right-sidebar.html.twig') }}
+        {% endblock %}
+
     </div>
 
 {% endblock %}
