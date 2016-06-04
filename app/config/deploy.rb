@@ -1,40 +1,53 @@
 set :application, "lilburnsupersonics"
-set :domain,      "{fetch(:application)}.com"
-set :user,         "root"
-set :use_sudo, false
-set :deploy_to,   "/var/www/#{fetch(:application)}"
+set :domain,      "www.lilburnsupersonics.com"
+set :port,  7822
+set :deploy_to,   "/var/www/lilburnsupersonics"
 set :app_path,    "app"
 
 set :scm,         :git
 set :scm_username, "imanjesolutions@gmail.com"
 set :scm_password, "jemani23"
-
-
-set :repo_url, 'git@github.com:jtolbert1975/lilburnsupersonicsMVC.git'
-set :branch, 'master'
-
-set   :deploy_via,    :copy
+set :repository, 'git@github.com:jtolbert1975/lilburnsupersonicsMVC.git'
 
 
 
+set :branch, 'release'
 
 
 
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `subversion`, `mercurial`, `perforce`, or `none`
 
 set :model_manager, "doctrine"
 # Or: `propel`
 
-role :web,        %w{lilbrnsupersonics.com}                         # Your HTTP server, Apache/etc
-role :app,         %w{lilbrnsupersonics.com}  , :primary => true       # This may be the same as your `Web` server
+role :web,  domain                     # Your HTTP server, Apache/etc
+role :app,  domain       , :primary => true       # This may be the same as your `Web` server
 
-set :shared_files, ["app/config/parameters.yml"]
-set :shared_children,     [app_path + "/logs", web_path + "/uploads", "vendor"]
+
+
+set :use_sudo, false
+set :user,  "root"
+
+
+set  :keep_releases,  3
 
 set :use_composer, true
 set :update_vendors, true
 
-set  :keep_releases,  3
+set :shared_files, ["app/config/parameters.yml"]
+set :shared_children,     [app_path + "/logs", web_path + "/uploads", "vendor",]
+
+
+
+
+set :writable_dirs,       ["app/cache", "app/logs", "app/sessions"]
+set :webserver_user,      "www-data"
+set :permission_method,   :chmod
+set :use_set_permissions, true
+
+set :ssh_options,{
+forward_agent: true,
+
+}
 
 task :upload_parameters do
   origin_file = "app/config/parameters.yml"
@@ -48,4 +61,4 @@ end
 after "deploy:setup", "upload_parameters"
 
 # Be more verbose by uncommenting the following line
-# logger.level = Logger::MAX_LEVEL
+ logger.level = Logger::MAX_LEVEL
